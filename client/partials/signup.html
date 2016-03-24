@@ -1,0 +1,30 @@
+<style type="text/css">
+	
+</style>
+
+<div class="large-10 large-offset-1 columns">
+	<div class="large-8 columns">
+		<br><br>
+		<h3 style='text-align: center'>New User Signup</h3>
+		<br><br>
+		<form>
+			<label>Name
+				<input type='text' placeholder='Name' ng-model='signupUser.name'>
+			</label>
+			<label>Username
+				<input type='text' placeholder='Username' ng-model='signupUser.username'>
+			</label>
+			<label>Password
+				<input type='password' placeholder='Password' ng-model='signupUser.password' aria-describedby='pwHelp'>
+				<p class='help-text' id='pwHelp'>Passord must be at least 6 characters long.</p>
+			</label>
+			<label>Confirm Password
+				<input type='password' placeholder='Confirm Password' ng-model='signupUser.firm_password' aria-describedby='cpwHelp'>
+				<p class="help-text" id='cpwHelp'>Confirm Password must be the same as Password.</p>
+			</label>
+			<br>
+			<button class='button success' style='width: 10rem' ng-click='signup()'>Signup</button>
+		</form>
+	</div>
+	
+</div>
