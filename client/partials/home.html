@@ -2,35 +2,41 @@
 	.pan{
 		height: 400px;
 		text-align: center;
-		border: groove 0.3em rgb(210,164,121);
+		border: groove 0.2em rgb(210,164,121);
 		border-radius: 0.5em;
 	}
 	#home-title{
 		text-align: center;
 	}
-	div.pan:hover{
-		border: groove 0.35em rgb(191,125,64);
+	.pan:hover{
+		border: groove 0.25em rgb(191,125,64);
 	}
-	.callout{
+	#home-callout{
 		background-color: rgb(198,140,83);
 	}
 	.box{
 		border: groove 0.1em rgb(210,164,121);
 		border-radius: 0.5em;
-		height: 10em;
-		width: 10em;
+		height: 13em;
+		width: 15em;
 		display: inline-block;
 		margin: 1em;
+		padding: 0.5em;
 	}
-	.box:hover{
-		border: groove 0.2em rgb(191,125,64);
+	.box a{
+		color: rgb(77,77,77);
+		text-decoration: bold;
+	}
+	.box a:hover{
+		color: black;
+		text-decoration: underline;
 	}
 </style>
 <br><br><br>
 <div class="row">
-	<div class="large-8 large-offset-2 columns" id='home-title'>
-		<div class="callout">
-			<strong><h4>Discover thousands of books through two of the worlds most renowned top book seller's list. Find books you are interested in and add them to your own bookshelf.</h4></strong>
+	<div class="large-10 large-offset-1 columns" id='home-title'>
+		<div class="callout" id='home-callout'>
+			<strong><h5>Discover thousands of books through two of the worlds most renowned top book seller's list. Find books you are interested in and add them to your own bookshelf.</h5></strong>
 		</div>
 	</div>
 </div>
@@ -45,19 +51,18 @@
 			</div>
 			<br>
 			<div class="row">
-				
-				<div class="large-10 large-offset-1 columns">
+				<div class="large-12 columns">
 					<div class="box">
-						Search By Best Seller's Week
+						<p>Search through the all of the New York Best Sellers list by Title, Author, Isbn, and the date of which the Best Sellers List was published.</p>
+						<a href="#/search">Go To Search &rarr;</a>
 					</div>
 					<div class="box">
-						Search By Best Seller's Category
+						<p>Search through the all of the New York Best Sellers list by Title, Author, Isbn, and the date of which the Best Sellers List was published.</p>
+						<a href="#/search">Go To Search &rarr;</a>
 					</div>
 					<div class="box">
-						Search By Best Seller's Author
-					</div>
-					<div class="box">
-						Search By Best Seller's Title
+						<p>Search through the all of the New York Best Sellers list by Title, Author, Isbn, and the date of which the Best Sellers List was published.</p>
+						<a href="#/search">Go To Search &rarr;</a>
 					</div>
 				</div>
 			</div>

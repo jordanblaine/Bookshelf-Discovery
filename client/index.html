@@ -10,14 +10,14 @@
 		<script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
 		<style type="text/css">
 			html, body, .pipes, .pip{
-				height: 100vh;
+				height: 100%;
+			}
+			.pipes, .pip{
+				padding-bottom: 5em;
 			}
 			#title{
 				background-color: rgb(128,0,0);
 				height: 5em;
-			}
-			.pip{
-				padding-bottom: 5em;
 			}
 			#title h3{
 				text-align: center;
@@ -62,7 +62,7 @@
 			</div>
 		</div>
 		<div class="pipes">
-			<div class="hide-for-small-only medium-2 large-2 columns pip" style='background-color: rgb(187,187,119)'>
+			<div class="hide-for-small-only medium-2 large-2 columns pip" id='left-side' style='background-color: rgb(187,187,119)'>
 				<div ng-if='!currentUser' class='row logsig' style='width: 100%; height: 5em; padding: auto 0'>
 					<a href="#/login" style='color: rgb(102,102,102)'>
 						<h4><u>Login</u></h4>
@@ -80,15 +80,14 @@
 					<br>
 					<div class="link">
 						<h5><a href="#/profile">Your Profile</a></h5>
+						<br>
 						<h5><a href="#">Your Bookshelf</a></h5>
 					</div>
 				</div>
 			</div>
 			<div class="small-12 medium-10 large-10 columns pip" style='padding: 0; background-color: rgb(220, 220, 188)'>
 				<br>
-				<div class="row">
-					<div ng-view=''></div>
-				</div>
+				<div ng-view=''></div>
 			</div>
 		</div>
 		<script type="text/javascript" src='index.js'></script>

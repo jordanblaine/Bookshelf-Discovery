@@ -1,0 +1,35 @@
+<style type="text/css">
+	#intro{
+		text-align: center;
+		background-color: rgb(198,140,83);;
+	}
+	.the-book{
+		text-align: center;
+	}
+</style>
+<br><br>
+<div class="row">
+	<div class="large-6 large-offset-3 columns">
+		<div class="callout" id='intro'>
+			<p>Find out some more information about the book here. Read up on any available reviews and even add this book to your own bookshelf.</p>
+		</div>
+	</div>
+</div>
+<br>
+<hr>
+<br>
+<div class="row the-book">
+	<div class="large-6 large-offset-3 columns">
+		<h4 ng-bind='book_details.title'></h4>
+	</div>
+</div>
+<div class="row the-book">
+	<div class="large-6 large-offset-3 columns">
+		<i><p style='text-decoration: itali'>by</p></i>
+		<strong><p ng-bind='book_details.author'></p></strong>
+	</div>
+</div>
+<br>
+<div class="row the-book">
+	<p ng-bind='book_details.description'></p>
+</div>

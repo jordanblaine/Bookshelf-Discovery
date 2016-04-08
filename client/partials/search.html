@@ -1,1 +1,218 @@
-search
+<style type="text/css">
+	.column:last-child:not(:first-child), .columns:last-child:not(:first-child){
+		float: left;
+	}
+	.search-title{
+		margin: 0 auto;
+		text-align: center;
+	}
+	hr { 
+	    border-style: inset;
+	    border-width: 0.3em;
+	    border-color: rgb(153, 153, 102);
+	} 
+	#search-list li{
+		display: inline-block;
+		padding: 0 1em;
+	}
+	#search-list a{
+		font-size: 120%;
+		color: rgb(89,89,89);
+		text-decoration: bold;
+	}
+	#search-list a:hover{
+		color: rgb(13,13,13);
+	}
+	#search-list ul{
+		text-align: center;
+	}
+	#search-form select, #search-form input{
+		display: inline-block;
+	}
+	#search-callout{
+		background-color: rgb(198,140,83);
+	}
+	.input-group span{
+		text-align: center;
+	}
+	.input-group input{
+		vertical-align: middle;
+	}
+	.input-group-field input, .input-group-field select{
+		margin: 0;
+	}
+	.button.disabled{
+		opacity: 0.7;
+	}
+</style>
+<br><br><br>
+<div class="row">
+	<div class="large-12 columns">
+		<div class="large-10 large-offset-1 search-title">
+			<div class="callout" id='search-callout'>
+				<strong>
+					<h5>Explore all of New York Times Best Sellers Lists. You can search by Book Title, Author's Name, Best Sellers List, and the date of when a specific Best Seller was published.</h5>
+				</strong>
+			</div>	
+		</div>
+		<br><br><br><br>
+		<div class="large-10 large-offset-1 columns">
+			<div class="large-12 columns">
+				<div id='search-list'>
+					<ul>
+						<li>
+							<a ng-click='searchBy(search_by.title)'>Title</a>
+						</li>
+					<span>|</span>
+						<li><a ng-click='searchBy(search_by.author)'>Author</a>
+						</li>
+					<span>|</span>
+						<li>
+							<a ng-click='searchBy(search_by.list)'>Book Sellers Lists</a>
+						</li>
+					<span>|</span>
+						<li>
+							<a ng-click='searchBy(search_by.list_date)'>Best Sellers Published List Date</a>
+						</li>
+					<span>|</span>
+						<li>
+							<a ng-click='searchBy(search_by.isbn)'>Isbn</a>
+						</li>
+					</ul>
+					</div>
+			</div>	
+			<div class="large-10 large-offset-1 columns">
+				<br><br>
+				<form id='search-form'>
+					<div class="input-group">
+						<span class='input-group-label'>
+							<p ng-bind='search.by' style='margin: 0'></p>
+						</span>
+						<div class="input-group-field">
+							<input ng-if="search.by === 'Title' || search.by === 'Author'" type='text' ng-model='search.text' placeholder="Book {{search.by}}">
+							<select ng-if="search.by === 'Best Sellers List'" ng-model='search.list' style='width: 59%'>
+								<option value='' disabled selected>Select Best Sellers List</option>
+								<option value='combined-print-and-e-book-fiction'>Combined Print & E-Book Fiction</option>
+								<option value='combined-print-and-e-book-nonfiction'>Combined Print & E-Book Nonfiction</option>
+								<option value='hardcover-fiction'>Hardcover Fiction</option>
+								<option value='hardcover-nonfiction'>Hardcover Nonfiction</option>
+								<option value='trade-fiction-paperback'>Paperback Trade Fiction</option>
+								<option value='mass-market-paperback'>Paperback Mass-Market Fiction</option>
+								<option value='paperback-nonfiction'>Paperback Nonfiction</option>
+								<option value='e-book-fiction'>E-Book Fiction</option>
+								<option value='e-book-nonfiction'>E-Book Nonfiction</option>
+								<option value='hardcover-advice'>Hardcover Advice & Misc.</option>
+								<option value='paperback-advice'>Paperback Advice & Misc.</option>
+								<option value='advice-how-to-and-miscellaneous'>Advice, How-To & Miscellaneous</option>
+								<option value='picture-books'>Children's Picture Books</option>
+								<option value='chapter-books'>Children's Chapter Books</option>
+								<option value='childrens-middle-grade'>Children's Middle Grade</option>
+								<option value='young-adult'>Young Adult</option>
+								<option value='paperback-books'>Children's Paperback Books</option>
+								<option value='childrens-middle-grade-hardcover'>Children's Middle Grade Hardcover</option>
+								<option value='childrens-middle-grade-paperback'>Children's Middle Grade Paperback</option>
+								<option value='childrens-middle-grade-e-book'>Children's Middle Grade E-Book</option>
+								<option value='young-adult-hardcover'>Young Adult Hardcover</option>
+								<option value='young-adult-paperback'>Young Adult Paperback</option>
+								<option value='young-adult-e-book'>Young Adult E-Book</option>
+								<option value='series-books'>Children's Series</option>
+								<option value='hardcover-graphic-books'>Hardcover Graphic Books</option>
+								<option value='paperback-graphic-books'>Paperback Graphic Books</option>
+								<option value='manga'>Manga</option>
+								<option value='combined-print-fiction'>Combined Hardcover & Paperback Fiction</option>
+								<option value='combined-print-nonfiction'>Combined Hardcover & Paperback Nonfiction</option>
+								<option value='animals'>Animals</option>
+								<option value='business'>Business</option>
+								<option value='Celebrities'>Celebrities</option>
+								<option value='crime-and-punishment'>Crime and Punishment</option>
+								<option value='culture'>Culture</option>
+								<option value='education'>Education</option>
+								<option value='espionage'>Espionage</option>
+								<option value='expeditions-disasters-and-adventures'>Expeditions, Disasters and Adventures</option>
+								<option value='family'>Family</option>
+								<option value='fashion-manners-and-customs'>Fashion, Manners and Customs</option>
+								<option value='food-and-fitness'>Food and Fitness</option>
+								<option value='games-and-activities'>Games and Activities</option>
+								<option value='hardcover-business-books'>Hardcover Business Books</option>
+								<option value='health'>Health</option>
+								<option value='humor'>Humor</option>
+								<option value='indigenous-americans'>Indigenous Americans</option>
+								<option value='paperback-business-books'>Paperback Business Books</option>
+								<option value='politics'>Politics</option>
+								<option value='race-and-civil-rights'>Race and Civil Rights</option>
+								<option value='relationships'>Relationships</option>
+								<option value='religion-spirituality-and-faith'>Religion, Spirituality and Faith</option>
+								<option value='science'>Science</option>
+								<option value='sports'>Sports</option>
+								<option value='travel'>Travel</option>
+							</select>
+							<input ng-if="search.by === 'Best Sellers List'" type='date' style='width: 40%' ng-model='search.date' min="2008-06-01">
+							<input ng-if="search.by === 'Isbn'" type='number' ng-model='search.text'>
+						</div>
+						<div class="input-group-button">
+							<input type='submit' class='button success' ng-click='doSearch()' value='Search'>
+						</div>
+					</div>
+				</form>
+				<br><br>
+			</div>
+		</div>
+		<hr>
+		<div class='large-12 columns' id='results'>
+			<br><br>
+			<div ng-if='no_results' style='margin:0 auto; text-align: center'>
+				<h5 ng-if="no_results.by === 'Title' || no_results.by === 'Author'" style='color: red'>Sorry, no books were found with the <span ng-bind='no_results.by'></span> of "<span ng-bind='no_results.message'></span>".</h5>
+				<h5 ng-if="no_results === 'Best Sellers List Date'" style='color: red'>Sorry, no books were found for "<span ng-bind='no_results.message'></span>".</h5>
+				<h5 ng-if="no_results.by === 'Isbn'" style='color: red'>Sorry, no books were found for the <span ng-bind='no_results.by'></span> # of "<span ng-bind='no_results.message'></span>".</h5>
+			</div>
+			<div ng-if='no_results === null'>
+				<table ng-if="search.by === 'Title' || search.by === 'Author'" class='hover'>
+					<thead>
+						<tr>
+							<th style='width: 40%'>Title</th>
+							<th style='width: 15%'>Author</th>
+							<th style='width: 15%'>Isbn</th>
+							<th style='width: 15%'>Review</th>
+							<th style='width: 15%'></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat='each in search_results'>
+							<td><a ng-href="#/{{each.isbns[0].isbn13}}" ng-bind='each.title'></a></td>
+							<td ng-bind='each.author'></td>
+							<td ng-bind='each.isbns[0].isbn13'></td>
+							<td><a ng-if='each.reviews[0].sunday_review_link.length > 0' ng-href='{{each.reviews[0].sunday_review_link}}' style='text-decoration: underline'>See Review</a></td>
+							<td>
+								<button class='button primary' ng-click='addBook(each.isbns[0].isbn13)' style='margin-top:1em'>Add to Bookshelf</button>
+								<!-- <button class='button success disabled' style='width: 95%;margin-top:1em'>&#10004;</button> -->
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<table ng-if="search.by === 'Category'" class='hover'>
+					<thead>
+						<tr>
+							<th style='width: 40%'>Title</th>
+							<th style='width: 15%'>Author</th>
+							<th style='width: 15%'>Isbn</th>
+							<th style='width: 15%'>Review</th>
+							<th style='width: 15%'></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat='each in search_results'>
+							<td ng-bind='each.book_details[0].title'></td>
+							<td ng-bind='each.book_details[0].author'></td>
+							<td ng-bind='each.isbns[0].isbn13'></td>
+							<td><a ng-if='each.reviews[0].sunday_review_link.length > 0' ng-href='{{each.reviews[0].sunday_review_link}}' style='text-decoration: underline'>See Review</a></td>
+							<td>
+								<button class='button primary' ng-click='addBook(each.isbns[0].isbn13)' style='margin-top:1em'>Add to Bookshelf</button>
+								<!-- <button class='button success disabled' style='width: 95%;margin-top:1em'>&#10004;</button> -->
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
