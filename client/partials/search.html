@@ -6,11 +6,6 @@
 		margin: 0 auto;
 		text-align: center;
 	}
-	hr { 
-	    border-style: inset;
-	    border-width: 0.3em;
-	    border-color: rgb(153, 153, 102);
-	} 
 	#search-list li{
 		display: inline-block;
 		padding: 0 1em;
@@ -55,16 +50,17 @@
 				</strong>
 			</div>	
 		</div>
-		<br><br><br><br>
+		<br><br>
 		<div class="large-10 large-offset-1 columns">
 			<div class="large-12 columns">
 				<div id='search-list'>
 					<ul>
 						<li>
 							<a ng-click='searchBy(search_by.title)'>Title</a>
-						</li>
+						<li/>
 					<span>|</span>
-						<li><a ng-click='searchBy(search_by.author)'>Author</a>
+						<li>
+							<a ng-click='searchBy(search_by.author)'>Author</a>
 						</li>
 					<span>|</span>
 						<li>
@@ -82,15 +78,14 @@
 					</div>
 			</div>	
 			<div class="large-10 large-offset-1 columns">
-				<br><br>
 				<form id='search-form'>
 					<div class="input-group">
-						<span class='input-group-label'>
-							<p ng-bind='search.by' style='margin: 0'></p>
-						</span>
 						<div class="input-group-field">
-							<input ng-if="search.by === 'Title' || search.by === 'Author'" type='text' ng-model='search.text' placeholder="Book {{search.by}}">
-							<select ng-if="search.by === 'Best Sellers List'" ng-model='search.list' style='width: 59%'>
+							<label ng-if="search.by === 'Title' || search.by === 'Author'" ng-bind='search.by'>
+								<input type='text' ng-model='search.text'>
+							</label>
+							<label class='middle' ng-if="search.by === 'Best Sellers List'">Best Sellers List
+								<select ng-model='search.list' style='width: 59%'>
 								<option value='' disabled selected>Select Best Sellers List</option>
 								<option value='combined-print-and-e-book-fiction'>Combined Print & E-Book Fiction</option>
 								<option value='combined-print-and-e-book-nonfiction'>Combined Print & E-Book Nonfiction</option>
@@ -145,26 +140,41 @@
 								<option value='science'>Science</option>
 								<option value='sports'>Sports</option>
 								<option value='travel'>Travel</option>
-							</select>
-							<input ng-if="search.by === 'Best Sellers List'" type='date' style='width: 40%' ng-model='search.date' min="2008-06-01">
-							<input ng-if="search.by === 'Isbn'" type='number' ng-model='search.text'>
+								</select>
+							</label>
+							<label class='middle' ng-if="search.by === 'Best Sellers List'">Published List Date
+								<input type='date' style='width: 40%' ng-model='search.date' min="2008-06-01">
+							</label>
+							<label ng-if="search.by === 'Isbn'">Book Isbn
+								<input type='number' ng-model='search.text'>
+							</label>
 						</div>
 						<div class="input-group-button">
 							<input type='submit' class='button success' ng-click='doSearch()' value='Search'>
 						</div>
 					</div>
-				</form>
-				<br><br>
+				</form><br><br>
 			</div>
 		</div>
-		<hr>
+	</div>
+	<hr style='border-style: inset;border-width: 0.3em;border-color: rgb(153, 153, 102);'><br>
+	<div class="row" ng-if='search_results.length > 0'>
+		<div class="large-offset-2 large-8 columns">
+			<div class="callout success" style='text-align:center'>
+				<h5>Showing results for books with the <span ng-bind='result_query.by'></span> of  "<span ng-bind='result_query.text'></span>"</h5>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-if='no_results'>
+		<div class="large-offset-3 large-6 columns">
+			<div class="callout alert" style='text-align:center'>
+				<h5>No books were found with the <span ng-bind='result_query.by'></span> of  "<span ng-bind='result_query.text'></span>"</h5>
+			</div>
+		</div>
+	</div>
+	<div class="row">
 		<div class='large-12 columns' id='results'>
 			<br><br>
-			<div ng-if='no_results' style='margin:0 auto; text-align: center'>
-				<h5 ng-if="no_results.by === 'Title' || no_results.by === 'Author'" style='color: red'>Sorry, no books were found with the <span ng-bind='no_results.by'></span> of "<span ng-bind='no_results.message'></span>".</h5>
-				<h5 ng-if="no_results === 'Best Sellers List Date'" style='color: red'>Sorry, no books were found for "<span ng-bind='no_results.message'></span>".</h5>
-				<h5 ng-if="no_results.by === 'Isbn'" style='color: red'>Sorry, no books were found for the <span ng-bind='no_results.by'></span> # of "<span ng-bind='no_results.message'></span>".</h5>
-			</div>
 			<div ng-if='no_results === null'>
 				<table ng-if="search.by === 'Title' || search.by === 'Author'" class='hover'>
 					<thead>
@@ -178,7 +188,7 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat='each in search_results'>
-							<td><a ng-href="#/{{each.isbns[0].isbn13}}" ng-bind='each.title'></a></td>
+							<td ng-bind='each.title'></td>
 							<td ng-bind='each.author'></td>
 							<td ng-bind='each.isbns[0].isbn13'></td>
 							<td><a ng-if='each.reviews[0].sunday_review_link.length > 0' ng-href='{{each.reviews[0].sunday_review_link}}' style='text-decoration: underline'>See Review</a></td>
@@ -189,10 +199,11 @@
 						</tr>
 					</tbody>
 				</table>
-				<table ng-if="search.by === 'Category'" class='hover'>
+				<table ng-if="search.by === 'Best Sellers List'" class='hover'>
 					<thead>
 						<tr>
-							<th style='width: 40%'>Title</th>
+							<th style='width: 10%'>Rank</th>
+							<th style='width: 30%'>Title</th>
 							<th style='width: 15%'>Author</th>
 							<th style='width: 15%'>Isbn</th>
 							<th style='width: 15%'>Review</th>
@@ -201,14 +212,18 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat='each in search_results'>
-							<td ng-bind='each.book_details[0].title'></td>
+							<td><p ng-bind='each.rank'></p></td>
+							<td><a ng-click='toBook(each)' ng-bind='each.book_details[0].title'></a></td>
 							<td ng-bind='each.book_details[0].author'></td>
-							<td ng-bind='each.isbns[0].isbn13'></td>
-							<td><a ng-if='each.reviews[0].sunday_review_link.length > 0' ng-href='{{each.reviews[0].sunday_review_link}}' style='text-decoration: underline'>See Review</a></td>
+							<td ng-bind='each.book_details[0].primary_isbn13'></td>
+							<td><a ng-if='each.reviews[0].sunday_review_link.length > 0' ng-href='{{each.reviews[0].sunday_review_link}}' style='text-decoration: underline'>See Book Details</a></td>
 							<td>
 								<button class='button primary' ng-click='addBook(each.isbns[0].isbn13)' style='margin-top:1em'>Add to Bookshelf</button>
 								<!-- <button class='button success disabled' style='width: 95%;margin-top:1em'>&#10004;</button> -->
 							</td>
+						</tr>
+						<tr ng-if='$scope.open_results'>
+
 						</tr>
 					</tbody>
 				</table>

@@ -6,6 +6,12 @@
 	.the-book{
 		text-align: center;
 	}
+	#book-hr{
+		border-width: 0.2em;
+	}
+	.large-1 img{
+		min-width: 250px;
+	}
 </style>
 <br><br>
 <div class="row">
@@ -16,20 +22,46 @@
 	</div>
 </div>
 <br>
-<hr>
+<hr id='book-hr'>
 <br>
-<div class="row the-book">
-	<div class="large-6 large-offset-3 columns">
-		<h4 ng-bind='book_details.title'></h4>
+<div class="row">
+	<div class="large-1 columns"></div>
+	<div class="large-1 columns">
+		<img ng-src="{{book_details.book_details[0].book_image}}">
 	</div>
-</div>
-<div class="row the-book">
-	<div class="large-6 large-offset-3 columns">
-		<i><p style='text-decoration: itali'>by</p></i>
-		<strong><p ng-bind='book_details.author'></p></strong>
+	<div class="large-8 columns">
+		<table class='stripe' height='500'>
+			<tr>
+				<th>Title</th>
+				<td ng-bind='book_details.book_details[0].title'></td>
+			</tr>
+			<tr>
+				<th>Author</th>
+				<td ng-bind='book_details.book_details[0].author'></td>
+			</tr>
+			<tr>
+				<th>Publisher</th>
+				<td ng-bind='book_details.book_details[0].publisher'></td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td ng-bind='book_details.book_details[0].description'></td>
+			</tr>
+			<tr>
+				<th>Book Isbn</th>
+				<td ng-bind='book_details.book_details[0].primary_isbn13'></td>
+			</tr>
+			<tr>
+				<th>Review</th>
+				<td>
+					<p ng-show='no_review === true'>No Reviews Available</p>
+					<a ng-hide='no_review === true' ng-href="{{book_details.reviews[0].sunday_review_link}}">See Review</a>
+				</td>
+			</tr>
+			<tr>
+				<th>Buy Online</th>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a ng-href='{{book_details.book_details[0].amazon_product_url}}'><img src="https://images-na.ssl-images-amazon.com/images/G/01/associates/remote-buy-box/buy1._V192207739_.gif"></a></td>
+			</tr>
+		</table>
 	</div>
-</div>
-<br>
-<div class="row the-book">
-	<p ng-bind='book_details.description'></p>
 </div>

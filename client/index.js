@@ -1,4 +1,4 @@
-var Book = angular.module("booksApp", ["ngRoute"]);
+var Book = angular.module("booksApp", ["ngRoute","ngStorage"]);
 
 Book.config(function($routeProvider){
 	$routeProvider
@@ -22,7 +22,7 @@ Book.config(function($routeProvider){
 			title: "Search",
 			controller: "searchController"
 		})
-		.when("/:isbn", {
+		.when("/book/:isbn", {
 			templateUrl: "partials/book.html",
 			title: "Book Profile",
 			controller: "bookController"
@@ -165,58 +165,44 @@ Book.controller("homeController", function(userFactory, bookFactory, $routeParam
 
 });
 
-Book.controller("bookController", function(userFactory, bookFactory, $routeParams, $scope, $location){
+Book.controller("bookController", function(userFactory, bookFactory, $routeParams, $scope, $location, $localStorage){
 
-	$scope.book_details = {};
-	$scope.isbn = $routeParams.isbn;
-	console.log($scope.isbn);
-	bookFactory.getByIsbn($scope.isbn,function(book){
-		$scope.book_details = book.results[0];
-		console.log($scope.book_details);
-	});
+	var isbn = $routeParams.isbn;
 
+	$scope.book_details = $localStorage.book;
+	console.log($scope.book_details);
+	if($scope.book_details.reviews[0].sunday_review_link.length < 1){$scope.no_review = true};
+	console.log($scope.book_details.reviews[0].sunday_review_link.length);
+	console.log($scope.no_review);
 
 });
 
-Book.controller("searchController", function(userFactory, bookFactory, $routeParams, $scope, $location){
+Book.controller("searchController", function(userFactory, bookFactory, $routeParams, $scope, $location, $localStorage){
 
-	$scope.search_by = {title: "Title", author: "Author", list: "Best Sellers List", list_date: "Date", isbn: "Isbn"};
-	$scope.search = {};
-	if($scope.search.by !== true){$scope.search.by = "Title"};
-	$scope.search_results = [];
-
-	$scope.searchBy = function(by){
-		$scope.search = {};
-		$scope.search.by = by;
-	}
-
-	$scope.doSearch = function(){
+	if ($location.search().i) {
 		$scope.no_results = null;
-		$scope.search_results = [];
-		console.log($scope.search);
-		formatDate($scope.search.date);
-		console.log($scope.search);
-		if ($scope.search.by === "Title" || $scope.search.by === "Author"){
-			bookFactory.search($scope.search,function(results){
+		if ($location.search().date){
+			var search = $location.search();
+			bookFactory.byList(search,function(results){
+				$scope.search.by = "Best Sellers List";
 				console.log(results);
+				$scope.search_results = [];
 				for (var i = 0; i < results.results.length; i++) {
 					$scope.search_results.push(results.results[i]);
 				};
-				console.log($scope.search_results);
-				if($scope.search_results.length < 1){
-					$scope.no_results = {};
-					$scope.no_results.by = $scope.search.by;
-					$scope.no_results.message = $scope.search.text;
-					$scope.search.text = null;
-					console.log($scope.no_results);
-				}
+				$scope.result_query = {by: $scope.search.by, text: $scope.search.text};
 			});
-		} else if($scope.search.by === "Best Sellers List"){
-			bookFactory.byList($scope.search,function(results){
+		} else if($location.search().b){
+			var search = {by: $location.search().b, text: $location.search().t}; 
+			bookFactory.search(search,function(results){
+				$scope.search.by = $location.search().b;
+				$scope.search.text = $location.search().t;
 				console.log(results);
+				$scope.search_results = [];
 				for (var i = 0; i < results.results.length; i++) {
 					$scope.search_results.push(results.results[i]);
 				};
+				$scope.result_query = {by: $scope.search.by, text: $scope.search.text};
 				console.log($scope.search_results);
 				if($scope.search_results.length < 1){
 					$scope.no_results = {};
@@ -227,6 +213,75 @@ Book.controller("searchController", function(userFactory, bookFactory, $routePar
 				}
 			});
 		}
+	}
+	$scope.search_by = {title: "Title", author: "Author", list: "Best Sellers List", list_date: "Date", isbn: "Isbn"};
+	$scope.search = {};
+	if($scope.search.by !== true){$scope.search.by = "Title"};
+
+	$scope.searchBy = function(by){
+		$scope.search = {};
+		$scope.search.by = by;
+		console.log($scope.search);
+	}
+
+	$scope.doSearch = function(){
+		$scope.no_results = null;
+		$scope.search_results = [];
+		if ($scope.search.by === "Title" || $scope.search.by === "Author"){
+			bookFactory.search($scope.search,function(results){
+				$location.search({i: "y", b: $scope.search.by, t: $scope.search.text});
+				console.log(results);
+				for (var i = 0; i < results.results.length; i++) {
+					$scope.search_results.push(results.results[i]);
+				};
+				console.log($scope.search_results);
+				$scope.result_query = {by: $scope.search.by, text: $scope.search.text};
+				if($scope.search_results.length < 1){
+					$scope.no_results = {};
+					$scope.no_results.by = $scope.search.by;
+					$scope.no_results.message = $scope.search.text;
+					$scope.search.text = null;
+					console.log($scope.no_results);
+				}
+			});
+		} else if($scope.search.by === "Best Sellers List"){
+			formatDate($scope.search.date);
+			bookFactory.byList($scope.search,function(results){
+				$location.search({i: "y", date: $scope.search.date, list: $scope.search.list});
+				console.log(results);
+				for (var i = 0; i < results.results.length; i++) {
+					$scope.search_results.push(results.results[i]);
+				};
+				console.log($scope.search_results);
+				$scope.result_query = {by: $scope.search.by, text: $scope.search.text};
+				if($scope.search_results.length < 1){
+					$scope.no_results = {};
+					$scope.no_results.by = $scope.search.by;
+					$scope.no_results.message = $scope.search.text;
+					$scope.search.text = null;
+					console.log($scope.no_results);
+				}
+			});
+		} else if($scope.search.by === "Isbn"){
+			bookFactory.search($scope.search,function(results){
+				console.log(results);
+				$scope.search_results = results;
+				console.log($scope.search_results);
+				$scope.result_query = {by: $scope.search.by, text:  $scope.search.text};
+				if($scope.search_results.length < 1){
+					$scope.no_results = {};
+					$scope.no_results.by = $scope.search.by;
+					$scope.no_results.message = $scope.search.text;
+					$scope.search.text = null;
+					console.log($scope.no_results);
+				}
+			});
+		}
+	}
+
+	$scope.toBook = function(book){
+		$localStorage.book = book;
+		$location.path("/book/"+book.isbns[0].isbn13);
 	}
 
 	function formatDate(input){

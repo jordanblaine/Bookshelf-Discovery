@@ -10,7 +10,8 @@
 		<script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
 		<style type="text/css">
 			html, body, .pipes, .pip{
-				height: 100%;
+				height: auto;
+				min-height: 100vh;
 			}
 			.pipes, .pip{
 				padding-bottom: 5em;
@@ -86,10 +87,15 @@
 				</div>
 			</div>
 			<div class="small-12 medium-10 large-10 columns pip" style='padding: 0; background-color: rgb(220, 220, 188)'>
-				<br>
 				<div ng-view=''></div>
+				<footer style='text-align: center;clear:both;position:relative;z-index:10'>
+					<hr style='border-width:0.2em;border-style:inset;margin-top:3em;margin-bottom:3em;'>
+					<h6>All rights reserved.</h6>
+				</footer>
 			</div>
+			<!-- <h5 id='bottext' style='text-align: center'>All rights reserved.</h5> -->
 		</div>
 		<script type="text/javascript" src='index.js'></script>
+		<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js'></script>
 	</body>
 </html>
