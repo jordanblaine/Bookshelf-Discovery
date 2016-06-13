@@ -28,6 +28,8 @@
 	<div class="large-1 columns"></div>
 	<div class="large-1 columns">
 		<img ng-src="{{book_details.book_details[0].book_image}}">
+		<button ng-if="each.shelf === 'off'" class='button primary' ng-click='addBook(each.isbns[0].isbn13,$index)' style='width: 95%;margin-top:1em' title='Add to your Bookshelf'>Add to Bookshelf</button>
+		<button ng-if="each.shelf === 'on'" class='button success addButton' ng-click='removeBook(each.isbns[0].isbn13,$index)' style='width: 95%;margin-top:1em' title='Already on your Bookshelf'>&#10004;</button><button ng-if="each.shelf === 'none'" class='button primary disabled addButton' style='width: 95%;margin-top:1em' title='Sign in to add a book to your Bookshelf'>Add to Bookshelf</button>
 	</div>
 	<div class="large-8 columns">
 		<table class='stripe' height='500'>
@@ -60,7 +62,7 @@
 			</tr>
 			<tr>
 				<th>Buy Online</th>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a ng-href='{{book_details.book_details[0].amazon_product_url}}'><img src="https://images-na.ssl-images-amazon.com/images/G/01/associates/remote-buy-box/buy1._V192207739_.gif"></a></td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a ng-href='{{book_details.book_details[0].amazon_product_url}}' target='_blank'><img src="https://images-na.ssl-images-amazon.com/images/G/01/associates/remote-buy-box/buy1._V192207739_.gif"></a></td>
 			</tr>
 		</table>
 	</div>

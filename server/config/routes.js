@@ -38,9 +38,17 @@ module.exports = function(app, passport){
 		res.json(200);
 	});
 
-	app.get("/books/authors", function(req,res){
-		Books.authors(req,res);
+	app.post("/books/addToShelf", function(req,res){
+		Books.addBook(req,res);
 	});	
+
+	app.post("/books/removeFromShelf", function(req,res){
+		Books.removeBook(req,res);
+	});	
+
+	app.post("/books/bookshelf/getIsbn", function(req,res){
+		Books.bookshelfIsbn(req,res);
+	});
 
 }
 

@@ -1,0 +1,44 @@
+<style type="text/css">
+	#shelf-callout{
+		background-color: rgb(172, 115, 57);
+		text-align: center;
+	}
+</style>
+<br><br><br>
+<div class="row">
+	<div class="large-6 large-offset-3 columns">
+		<div class="callout" id='shelf-callout'>
+			<strong>
+				<p>Bookmark any books to your bookshelf to come back and review them later.</p>
+			</strong>
+		</div>
+	</div>
+</div>
+<br>
+<div class="row">
+	<br>
+	<div class="large-8 large-offset-2">
+		<table>
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Author</th>
+					<th>Isbn</th>
+					<th>Review</th>
+					<th>Edit</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat='book in books'>
+					<td style='width: 25%' ng-bind='book.title'></td>
+					<td style='width: 20%' ng-bind='book.author'></td>
+					<td style='width: 15%' ng-bind='book.isbn'></td>
+					<td style='width: 15%' ng-bind='book.review'></td>
+					<td style='width: 15%' ng-bind=''>
+						<button></button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
