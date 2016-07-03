@@ -44,6 +44,15 @@ module.exports = {
 		Books.find({_user: req.body.id},function(err,result){
 			res.json({isbns: result});
 		});
+	},
+
+	saveNotes: function(req,res){
+		console.log(req.body);
+		Books.findOne({_user: req.body._id}).where("book_isbn").equals(req.body.book).exec(function(err,book){
+			book.notes = req.body.notes;
+			book.save;
+			res.json(book);
+		});
 	}
 
 }

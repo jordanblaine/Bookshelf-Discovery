@@ -17,8 +17,8 @@
 	.box{
 		border: groove 0.1em rgb(210,164,121);
 		border-radius: 0.5em;
-		height: 13em;
-		width: 15em;
+		height: 14em;
+		width: 30em;
 		display: inline-block;
 		margin: 1em;
 		padding: 0.5em;
@@ -30,6 +30,26 @@
 	.box a:hover{
 		color: black;
 		text-decoration: underline;
+	}
+	.box button{
+		text-decoration: bold;
+		width: 9rem;
+		height: 3rem;
+	}
+	table{
+		color: blue;
+		width: 50rem;
+		border: rgb(187,187,119) dotted 0.3rem;
+	}
+	.striped a{
+		color: black;
+		font-size: 14px;
+	}
+	.striped a:hover{
+		text-decoration: underline;
+	}
+	table tr:nth-of-type(even) {
+    	background-color: transparent !important;
 	}
 </style>
 <br><br><br>
@@ -53,18 +73,42 @@
 			<div class="row">
 				<div class="large-12 columns">
 					<div class="box">
-						<p>Search through the all of the New York Best Sellers list by Title, Author, Isbn, and the date of which the Best Sellers List was published.</p>
-						<a href="#/search">Go To Search &rarr;</a>
-					</div>
-					<div class="box">
-						<p>Search through the all of the New York Best Sellers list by Title, Author, Isbn, and the date of which the Best Sellers List was published.</p>
-						<a href="#/search">Go To Search &rarr;</a>
-					</div>
-					<div class="box">
-						<p>Search through the all of the New York Best Sellers list by Title, Author, Isbn, and the date of which the Best Sellers List was published.</p>
-						<a href="#/search">Go To Search &rarr;</a>
+						<p>Search through the all of the many New York Times Best Sellers list by Title, Author, Isbn, and the date of which the Best Sellers List was published.</p>
+						<a class='button success' href='#/search'>Go to Search &rarr;</a>
 					</div>
 				</div>
+			</div>
+			<div class="row">
+				<table class='striped'>
+					<tr>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=combined-print-and-e-book-fiction">Combined Print & E-Book Fiction</a></td>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=combined-print-and-e-book-nonfiction">Combined Print & E-Book Nonfiction</a></td>
+						
+					</tr>
+					<tr>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=hardcover-nonfiction">Hardcover Nonfiction</a></td>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=hardcover-fiction">Hardcover Fiction</a></td>
+					</tr>
+					<tr>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=paperback-nonfiction">Paperback Nonfiction</a></td>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=culture">Culture</a></td>
+					</tr>	
+						<td><a ng-href="#/search?i=y&date={{date}}&list=education">Education</a></td>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=politics">Politics</a></td>
+					</tr>
+					<tr>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=science">Science</a></td>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=series">Children's Series</a></td>
+					</tr>
+					<tr>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=business">Business</a></td>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=health">Health</a></td>
+					</tr>
+					<tr>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=religion-spirituality-and-faith">Religion, Spirituality and Faith</a></td>
+						<td><a ng-href="#/search?i=y&date={{date}}&list=travel">Travel</a></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>

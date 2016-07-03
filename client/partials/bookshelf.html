@@ -3,6 +3,19 @@
 		background-color: rgb(172, 115, 57);
 		text-align: center;
 	}
+	#bstable table, #bstable th, #bstable td{
+		border: 2px gray dotted;
+	}
+	#bstable th, #bstable td{
+		padding: 1em;
+	}
+	.but{
+		height: 3rem;
+		width: 7rem;
+	}
+	.bookshelf{
+		width: 50vw;
+	}
 </style>
 <br><br><br>
 <div class="row">
@@ -17,26 +30,50 @@
 <br>
 <div class="row">
 	<br>
-	<div class="large-8 large-offset-2">
-		<table>
+	<div class="large-8 large-offset-2" id='bstable'>
+		<table class='hover bookshelf'>
 			<thead>
 				<tr>
 					<th>Title</th>
 					<th>Author</th>
 					<th>Isbn</th>
 					<th>Review</th>
+					<th>Notes</th>
 					<th>Edit</th>
+					<th ng-if='are_you_sure.is'>
+						Are you sure?
+					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat='book in books'>
-					<td style='width: 25%' ng-bind='book.title'></td>
-					<td style='width: 20%' ng-bind='book.author'></td>
-					<td style='width: 15%' ng-bind='book.isbn'></td>
-					<td style='width: 15%' ng-bind='book.review'></td>
-					<td style='width: 15%' ng-bind=''>
-						<button></button>
+				<tr ng-repeat-start='book in books'>
+					<td style='width: 35%' ng-bind='book.results[0].title'></td>
+					<td style='width: 20%' ng-bind='book.results[0].author'></td>
+					<td style='width: 15%' ng-bind='book.results[0].isbns[0].isbn13'></td>
+					<td style='width: 20%'>
+						<a ng-if='book.results[0].reviews[0].sunday_review_link.length > 0' ng-href="{{book.results[0].reviews[0].sunday_review_link}}" style='text-decoration: underline' target='_blank'>See Review</a>
 					</td>
+					<td style='width: 15%'>
+						<a ng-click="updateNotes()" style='text-decoration: underline'>Update Notes</a>
+					</td>
+					<td style='width: 10%'>
+						<button ng-click='areYouSure($index)' class='button alert small' style='margin: auto 0'>Remove Book</button>
+					</td>
+					<td style='width: 30%' ng-if="are_you_sure.is === $index">
+						<button ng-click='notSure($index)' class='button success but'>No, keep book.</button>
+						<button class='button but' ng-click='removeBook(book.results[0].isbns[0].isbn13,$index)'>Yes, remove book.</button>
+					</td>
+				</tr>
+				<tr ng-repeat-end=''>
+					<form>
+						<label>Current Page #:
+							<input type='number' ng-model='notes.page' value='book.notes.page'>
+						</label>
+						<label>Summary of Book:
+							<textarea ng-model='notes.summary' value='book.notes.summary'></textarea>
+						</label>
+						<button ng-clcik='saveNotes()'>Save</button>
+					</form>
 				</tr>
 			</tbody>
 		</table>

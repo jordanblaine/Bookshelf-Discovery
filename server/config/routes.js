@@ -50,6 +50,10 @@ module.exports = function(app, passport){
 		Books.bookshelfIsbn(req,res);
 	});
 
+	app.post("/books/bookshelf/saveNotes", function(req,res){
+		Books.saveNotes(req,res);
+	});
+
 }
 
 function isLoggedIn(req, res, next) {
