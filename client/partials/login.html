@@ -1,5 +1,14 @@
 <style type="text/css">
-	
+	#loginCallout{
+		background-color: rgb(202, 202, 155);
+		text-align: center
+	}
+	#loginCallout p{
+		color: rgb(230,0,0);
+	}
+	.error{
+		color: rgb(230,0,0);
+	}
 </style>
 
 <div class="large-10 large-offset-1 columns">
@@ -8,11 +17,16 @@
 		<h3 style='text-align: center'>User Login</h3>
 		<br><br>
 		<form>
+			<div id='loginCallout' class="callout" ng-if="error.combo == 'no good'">
+				<p>Your Username and Password combination is incorrect. Please try again.</p>
+			</div>
 			<label>Username
-				<input type='text' placeholder='Username' ng-model='loginUser.username'>
+				<input type='text' placeholder='Username' ng-model='loginUser.username' aria-describedby='unHelp'>
+				<p class="help-text" ng-class="{error: error.username === 'red'}" id='unHelp'>Your Username is at least 6 characters long.</p>
 			</label>
 			<label>Password
-				<input type='password' placeholder='Password' ng-model='loginUser.password'>
+				<input type='password' placeholder='Password' ng-model='loginUser.password' aria-describedby='pwHelp'>
+				<p class='help-text' ng-class="{error: error.password === 'red'}" id='pwHelp'>Your Passord is at least 6 characters long.</p>
 			</label>
 			<br>
 			<button class='button success' style='width: 15rem' ng-click='login()'>Login</button>

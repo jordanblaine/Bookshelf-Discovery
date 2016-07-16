@@ -45,7 +45,8 @@ Book.factory("userFactory", function($http, $location, $window){
 				$location.path('/');
 				$window.location.reload();
 			}).error(function(error){
-				callback(error);
+				var taken = {username: "taken"};
+				callback(taken);
 			});
 	}
 
@@ -56,7 +57,8 @@ Book.factory("userFactory", function($http, $location, $window){
 				$location.path('/');
 				$window.location.reload();
 			}).error(function(error){
-				callback(error);
+				var badLogin = {username: "incorrect"};
+				callback(badLogin);
 			});
 	}
 
@@ -156,6 +158,7 @@ Book.factory("bookFactory", function($http){
 Book.controller("userController", function(userFactory, bookFactory, $routeParams, $scope, $location){
 
 	$scope.currentUser = null;
+	$scope.error = {};
 
 	userFactory.current(function(user){
 		if(user.name){
@@ -165,24 +168,104 @@ Book.controller("userController", function(userFactory, bookFactory, $routeParam
 	});
 
 	$scope.signup = function(){
-		console.log($scope.signupUser);
-		userFactory.signup($scope.signupUser, function(user,error){
-			if(error){
-				console.log("no");
-			} else{
-				console.log(user);
+		$scope.error = {};
+		if ($scope.signupUser) {
+			if ($scope.signupUser.name && $scope.signupUser.name.length>0) {
+				if ($scope.signupUser.username && $scope.signupUser.username.length>5) {
+					if (($scope.signupUser.password && $scope.signupUser.password.length>5 && $scope.signupUser.firm_password && $scope.signupUser.firm_password.length>5) && ($scope.signupUser.password == $scope.signupUser.firm_password)) {
+						userFactory.signup($scope.signupUser, function(user){
+							if (user.username == "taken") {
+								$scope.signupUser.username = null;
+								$scope.error.taken = "taken";
+							};
+						});
+					} else {
+						console.log(1);
+						$scope.signupUser.password = null;
+						$scope.signupUser.firm_password = null;
+						$scope.error.password = "red";
+						$scope.error.firm_password = "red";
+					}
+				} else if (($scope.signupUser.password && $scope.signupUser.password.length>5 && $scope.signupUser.firm_password && $scope.signupUser.firm_password.length>5) && ($scope.signupUser.password == $scope.signupUser.firm_password)){
+					console.log(2);
+					$scope.signupUser.username = null;
+					$scope.error.username = "red";
+				} else {
+					console.log(3);
+					$scope.signupUser.username = null;
+					$scope.signupUser.password = null;
+					$scope.signupUser.firm_password = null;
+					$scope.error.username = "red";
+					$scope.error.password = "red";
+					$scope.error.firm_password = "red";
+				}
+			} else if($scope.signupUser.username && $scope.signupUser.username.length>5){
+				console.log(4);
+				if (($scope.signupUser.password && $scope.signupUser.password.length>5 && $scope.signupUser.firm_password && $scope.signupUser.firm_password.length>5) && ($scope.signupUser.password == $scope.signupUser.firm_password)) {
+					console.log(5);
+					$scope.signupUser.name = null;
+					$scope.error.name = "red";
+				} else {
+					console.log(6);
+					$scope.signupUser.name = null;
+					$scope.signupUser.password = null;
+					$scope.signupUser.firm_password = null;
+					$scope.error.name = "red";
+					$scope.error.password = "red";
+					$scope.error.firm_password = "red";
+				}
+			} else if(($scope.signupUser.password && $scope.signupUser.password.length>5 && $scope.signupUser.firm_password && $scope.signupUser.firm_password.length>5) && ($scope.signupUser.password == $scope.signupUser.firm_password)){
+				console.log(7);
+				$scope.signupUser.name = null;
+				$scope.signupUser.username = null;
+				$scope.error.name = "red";
+				$scope.error.username = "red";
+			} else {
+				console.log(8);
+				$scope.signupUser = null;
+				$scope.error.name = "red";
+				$scope.error.username = "red";
+				$scope.error.password = "red";
+				$scope.error.firm_password = "red";
 			}
-		})
+		} else {
+			console.log(9);
+			$scope.error.name = "red";
+			$scope.error.username = "red";
+			$scope.error.password = "red";
+			$scope.error.firm_password = "red";
+		}
 	}
 
 	$scope.login = function(){
-		userFactory.login($scope.loginUser, function(user,error){
-			if(error){
-				console.log("no");
-			} else{
-				console.log(user);
+		$scope.error = {};
+		if ($scope.loginUser) {
+			if ($scope.loginUser.username && $scope.loginUser.username.length>5) {
+				if ($scope.loginUser.password && $scope.loginUser.password.length>5) {
+					userFactory.login($scope.loginUser, function(user){
+						if(user.username == "incorrect"){
+							$scope.loginUser = null;
+							$scope.error.combo = "no good";
+						}
+					});
+				} else{
+					$scope.loginUser.password = null;
+					$scope.error.password = "red";
+				}
+			} else if($scope.loginUser.password && $scope.loginUser.password.length>5){
+				$scope.loginUser.username = null;
+				$scope.error.username = "red";
+			} else {
+				$scope.loginUser.username = null;
+				$scope.loginUser.password = null;
+				$scope.error.username = "red";
+				$scope.error.password = "red";
 			}
-		})
+		} else {
+			$scope.error.username = "red";
+			$scope.error.password = "red";
+		}
+		
 	}
 
 	$scope.logout = function(){

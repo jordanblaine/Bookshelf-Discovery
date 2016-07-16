@@ -1,5 +1,7 @@
 <style type="text/css">
-	
+	.error{
+		color: rgb(230,0,0);
+	}
 </style>
 
 <div class="large-10 large-offset-1 columns">
@@ -9,18 +11,22 @@
 		<br><br>
 		<form>
 			<label>Name
-				<input type='text' placeholder='Name' ng-model='signupUser.name'>
+				<input type='text' placeholder='Name' ng-model='signupUser.name' aria-describedby='nHelp'>
+				<p class="help-text" ng-if="error.name === 'red'" ng-class="{error: error.name === 'red'}" id='nHelp'>Name field must be filled in.</p>
 			</label>
 			<label>Username
-				<input type='text' placeholder='Username' ng-model='signupUser.username'>
+				<input type='text' placeholder='Username' ng-model='signupUser.username' aria-describedby='unHelp'>
+				<p class="help-text" ng-if="error.taken == 'taken'" style='color: rgb(230,0,0)' id='unHelp'>Username is already taken. Please select a new username.</p>
+				<p class="help-text" ng-class="{error: error.username === 'red'}" id='unHelp'>Username must be at least 6 characters long.</p>
+
 			</label>
 			<label>Password
 				<input type='password' placeholder='Password' ng-model='signupUser.password' aria-describedby='pwHelp'>
-				<p class='help-text' id='pwHelp'>Passord must be at least 6 characters long.</p>
+				<p class='help-text' ng-class="{error: error.password === 'red'}" id='pwHelp'>Passord must be at least 6 characters long.</p>
 			</label>
 			<label>Confirm Password
 				<input type='password' placeholder='Confirm Password' ng-model='signupUser.firm_password' aria-describedby='cpwHelp'>
-				<p class="help-text" id='cpwHelp'>Confirm Password must be the same as Password.</p>
+				<p class="help-text" ng-class="{error: error.firm_password === 'red'}" id='cpwHelp'>Confirm Password must be the same as Password.</p>
 			</label>
 			<br>
 			<button class='button success' style='width: 15rem' ng-click='signup()'>Signup</button>

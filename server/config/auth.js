@@ -40,7 +40,8 @@ module.exports = function(app, passport) {
 		function (req, username, password, done) {
 
 			var newUser = req.body;
-			
+			var taken = {taken: req.body.username};
+
 			Users.findOne({username: newUser.username}, function(err, response){
 				if(!response){
 					var user = new Users(newUser);
@@ -56,7 +57,8 @@ module.exports = function(app, passport) {
 					});
 				} else {
 					console.log('Email taken');
-					return done(null);
+					console.log(taken);
+					return done(taken);
 				}
 			});
 		}
