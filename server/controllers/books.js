@@ -28,7 +28,7 @@ module.exports = {
 		Users.findOne({_id: req.body._id}, function(err,user){
 			Books.findOne({_user: user._id}).where("book_isbn").equals(req.body.book).exec(function(err,book){
 				if(err || !book){res.send(400)};
-				console.log(book,2);
+				console.log(book,user,2);
 				var index = user.bookshelf.indexOf(book._id);
 				user.bookshelf.splice(index,1);				
 				user.save();

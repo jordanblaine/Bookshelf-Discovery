@@ -16,10 +16,27 @@
 	.bookshelf{
 		width: 50vw;
 	}
+	#dtable button{
+		width: 8rem;
+		margin: 1rem auto;
+		display: block;
+	}
+	#dtable textarea{
+		resize: vertical;
+		width: 100%;
+		height: 5rem;
+		max-height: 20rem;
+	}
+	td h5{
+		text-align: center;
+	}
+	#no_notes{
+		text-decoration: bold;
+	}
 </style>
 <br><br><br>
 <div class="row">
-	<div class="large-6 large-offset-3 columns">
+	<div class="large-8 large-offset-2 columns">
 		<div class="callout" id='shelf-callout'>
 			<strong>
 				<p>Bookmark any books to your bookshelf to come back and review them later.</p>
@@ -30,7 +47,7 @@
 <br>
 <div class="row">
 	<br>
-	<div class="large-8 large-offset-2" id='bstable'>
+	<div class="large-8 large-offset-1" id='bstable'>
 		<table class='hover bookshelf'>
 			<thead>
 				<tr>
@@ -40,9 +57,7 @@
 					<th>Review</th>
 					<th>Notes</th>
 					<th>Edit</th>
-					<th ng-if='are_you_sure.is'>
-						Are you sure?
-					</th>
+					<th ng-if='are_you_sure.is'>Are you sure?</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -54,7 +69,7 @@
 						<a ng-if='book.results[0].reviews[0].sunday_review_link.length > 0' ng-href="{{book.results[0].reviews[0].sunday_review_link}}" style='text-decoration: underline' target='_blank'>See Review</a>
 					</td>
 					<td style='width: 15%'>
-						<a ng-click="updateNotes()" style='text-decoration: underline'>Update Notes</a>
+						<a ng-click="openNotes($index)" style='text-decoration: underline'>Update Notes</a>
 					</td>
 					<td style='width: 10%'>
 						<button ng-click='areYouSure($index)' class='button alert small' style='margin: auto 0'>Remove Book</button>
@@ -64,16 +79,31 @@
 						<button class='button but' ng-click='removeBook(book.results[0].isbns[0].isbn13,$index)'>Yes, remove book.</button>
 					</td>
 				</tr>
-				<tr ng-repeat-end=''>
-					<form>
-						<label>Current Page #:
-							<input type='number' ng-model='notes.page' value='book.notes.page'>
-						</label>
-						<label>Summary of Book:
-							<textarea ng-model='notes.summary' value='book.notes.summary'></textarea>
-						</label>
-						<button ng-clcik='saveNotes()'>Save</button>
-					</form>
+				<tr ng-repeat-end='' ng-if="book_notes.is === $index">
+					<td colspan='6'>
+						<h5>Notes for <span ng-bind='book.results[0].title'></span></h5>
+						<p ng-if='' id='no_notes'>There are currently no notes for this book. Fill in below to save your first notes for this book.</p>
+						<table id='dtable'>
+							<tr>
+								<th colspan='6'>
+									<p id='no_notes'>There are currently no notes for this book. Fill in below to save your first notes for this book.</p>
+								</th>
+							</tr>
+							<tr>
+								<td colspan='1'>
+									<label>Current Page #:
+										<input type='number' min='1' max='2000' ng-bind='' ng-model='notes.page'>
+									</label>
+								</td>
+								<td colspan='4'>
+									<label>Summary of Book:
+										<textarea ng-model='notes.summary' value='book.notes.summary'></textarea>
+									</label>
+								</td>
+								<td clospan='1'><button class='button success' ng-clcik='saveNotes($index)'>Save Notes</button><button class='button primary' ng-click='closeNotes()'>Close Notes</button></td>
+							</tr>
+						</table>
+					</td>
 				</tr>
 			</tbody>
 		</table>

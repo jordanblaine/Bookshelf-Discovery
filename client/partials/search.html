@@ -192,8 +192,9 @@
 						</td>
 						<td><a ng-if='each.reviews[0].sunday_review_link.length > 0' ng-href='{{each.reviews[0].sunday_review_link}}' style='text-decoration: underline' target='_blank'>See Review</a></td>
 						<td>
-							<button ng-if="each.shelf === 'off'" class='button primary' ng-click='addBook(each.isbns[0].isbn13,$index)' style='width: 95%;margin-top:1em' title='Add to your Bookshelf'>Add to Bookshelf</button>
+							<button ng-if="each.shelf === 'off'" class='button primary' ng-click='addBook(each.isbns[0].isbn13,$index)' style='width: 95%;font-size:83%;margin-top:1em' title='Add to your Bookshelf'>Add to Bookshelf</button>
 							<button ng-if="each.shelf === 'on'" class='button success addButton' ng-click='removeBook(each.isbns[0].isbn13,$index)' style='width: 95%;margin-top:1em' title='Already on your Bookshelf'>&#10004;</button><button ng-if="each.shelf === 'none'" class='button primary disabled addButton' style='width: 95%;margin-top:1em' title='Sign in to add a book to your Bookshelf'>Add to Bookshelf</button>
+							<button ng-if="each.shelf === 'none'" class='button primary disabled addButton' style='width: 95%;margin-top:1em;font-size:83%' title='Sign in to add a book to your Bookshelf'>Add to Bookshelf</button>
 						</td>
 					</tr>
 					<tr ng-repeat-end=''>
@@ -216,21 +217,16 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat-start="each in search_results">
+					<tr ng-repeat="each in search_results">
 						<td><p ng-bind='each.rank'></p></td>
 						<td><a ng-click='toBook(each)' ng-bind='each.book_details[0].title'></a></td>
 						<td ng-bind='each.book_details[0].author'></td>
 						<td ng-bind='each.book_details[0].primary_isbn13'></td>
 						<td><a ng-if='each.reviews[0].sunday_review_link.length > 0' ng-href='{{each.reviews[0].sunday_review_link}}' style='text-decoration: underline' target='_blank'>See Review</a></td>
 						<td>
-							<button ng-if="each.shelf === 'off'" class='button primary' ng-click='addBook(each.book_details[0].primary_isbn13,$index)' style='width: 95%;margin-top:1em' title='Add to your Bookshelf'>Add to Bookshelf</button>
-							<button ng-if="each.shelf === 'on'" class='button success addButton' ng-click='removeBook(each.book_details[0].primary_isbn13,$index)' style='width: 95%;margin-top:1em' title='Already on your Bookshelf'>&#10004;</button><button ng-if="each.shelf === 'none'" class='button primary disabled addButton' style='width: 95%;margin-top:1em' title='Sign in to add a book to your Bookshelf'>Add to Bookshelf</button>
-						</td>
-					</tr>
-					<tr ng-repeat-end=''>
-						<td ng-hide="desc[$index].is === 'hide'" colspan='6' style='text-align: center'>
-							<p style='margin-bottom:0'>&uarr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Description:&nbsp;</strong>
-							<span ng-bind='each.book_details[0].description'></span>
+							<button ng-if="each.shelf === 'off'" class='button primary' ng-click='addBook(each.book_details[0].primary_isbn13,$index)' style='width: 95%;font-size: 83%;margin-top:1em' title='Add to your Bookshelf'>Add to Bookshelf</button>
+							<button ng-if="each.shelf === 'on'" class='button success addButton' ng-click='removeBook(each.book_details[0].primary_isbn13,$index)' style='width: 95%;margin-top:1em;height:38px' title='Already on your Bookshelf'>&#10004;</button>
+							<button ng-if="each.shelf === 'none'" class='button primary disabled addButton' style='width: 95%;margin-top:1em;font-size:83%' title='Sign in to add a book to your Bookshelf'>Add to Bookshelf</button>
 						</td>
 					</tr>
 				</tbody>

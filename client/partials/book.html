@@ -62,14 +62,19 @@
 			</tr>
 			<tr>
 				<th>Buy Online</th>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a ng-href='{{book_details.book_details[0].amazon_product_url}}' target='_blank'><img src="https://images-na.ssl-images-amazon.com/images/G/01/associates/remote-buy-box/buy1._V192207739_.gif"></a></td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;<a ng-href='{{book_details.book_details[0].amazon_product_url}}' target='_blank'><img src="https://images-na.ssl-images-amazon.com/images/G/01/associates/remote-buy-box/buy1._V192207739_.gif"></a></td>
 			</tr>
 			<tr>
 				<th>Interested?</th>
-				<td ng-if='currentUser.name'>
-					<button class='button primary' ng-click='addBook(book_details.book_details[0].primary_isbn13)' style='width: 95%;margin-top:1em' title='Add to your Bookshelf'>Add to Bookshelf</button>
-				</td>
 				<td ng-if='!currentUser'><a href="#/login">Login</a> to add this book to your bookshelf.</td>
+				<td ng-if='currentUser.name && book.is === "yes"'>
+					<button class='button success' ng-click='removeBook(book_details.book_details[0].primary_isbn13)' style='width: 30%;margin-top:1em;border-radius: 5px' title='Already on your Bookshelf'>&#10004;</button>
+					<h6>This book is already on your bookshelf. Click button to remove.</h6>
+				</td>
+				<td ng-if='currentUser.name && book.is === "no"'>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<button class='button primary' ng-click='addBook(book_details.book_details[0].primary_isbn13)' style='width: 30%;margin-top:1em;border-radius: 5px' title='Add to your Bookshelf'>Add to Bookshelf</button>
+				</td>
 			</tr>
 		</table>
 	</div>

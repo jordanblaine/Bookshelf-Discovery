@@ -145,6 +145,7 @@ Book.factory("bookFactory", function($http){
 	}
 
 	factory.saveNotes = function(notes){
+		console.log(notes);
 		$http.post("/books/bookshelf/saveNotes",notes).success(function(data){
 			callback(data);
 		}).error(function(){
@@ -299,16 +300,51 @@ Book.controller("homeController", function(userFactory, bookFactory, $routeParam
 
 Book.controller("bookController", function(userFactory, bookFactory, $routeParams, $scope, $location, $localStorage){
 
+	$scope.user_isbns = [];
+	$scope.book = {};
+	userFactory.current(function(user){
+		if(user.name){
+			$scope.currentUser = user;
+			console.log($scope.currentUser);
+			bookFactory.bookshelfIsbn({id: $scope.currentUser._id},function(results){
+				$scope.user_isbns = results.isbns;
+				for (var i = 0; i < $scope.user_isbns.length; i++) {
+					if ($scope.user_isbns[i].book_isbn == isbn) {
+						$scope.book.is = "yes";
+						break;
+					} else if($scope.book.is === "no"){
+						continue;
+					} else {
+						$scope.book.is = "no";
+					}
+				};
+				console.log($scope.book);
+			});
+		}
+	});
 	var isbn = $routeParams.isbn;
 
 	$scope.book_details = $localStorage.book;
 	console.log($scope.book_details);
+	console.log($scope.book_details)
 	if($scope.book_details.reviews[0].sunday_review_link.length < 1){$scope.no_review = true};
 
 	$scope.addBook = function(isbn){
 		var user = $scope.currentUser;
 		user.book = isbn;
-		bookFactory.addToShelf(user,function(result){});
+		console.log(user);
+		bookFactory.addToShelf(user,function(result){
+			$scope.book.is = "yes";
+		});
+	}
+
+	$scope.removeBook = function(isbn){
+		var user = $scope.currentUser;
+		user.book = isbn;
+		console.log(user);
+		bookFactory.removeFromShelf(user,function(result){
+			$scope.book.is = "no";
+		});
 	}
 
 });
@@ -319,6 +355,7 @@ Book.controller("shelfController", function(userFactory, bookFactory, $routePara
 	$scope.user_isbns = [];
 	$scope.books = [];
 	$scope.are_you_sure = {};
+	$scope.book_notes = {};
 	userFactory.current(function(user){
 		if(user.name){
 			$scope.currentUser = user;
@@ -354,6 +391,7 @@ Book.controller("shelfController", function(userFactory, bookFactory, $routePara
 	}
 
 	$scope.areYouSure = function(index){
+		$scope.book_notes.is = null;
 		$scope.are_you_sure.is = index;
 	}
 
@@ -361,8 +399,14 @@ Book.controller("shelfController", function(userFactory, bookFactory, $routePara
 		$scope.are_you_sure.is = null;
 	}
 
-	$scope.openNotes = function(){
+	$scope.openNotes = function(index){
+		console.log("dkfnv");
+		$scope.book_notes.is = index;
+	}
 
+	$scope.closeNotes = function(){
+		console.log("nbkdflnlkdnlv");
+		$scope.book_notes.is = null;
 	}
 
 	$scope.saveNotes = function(){
@@ -380,6 +424,8 @@ Book.controller("searchController", function(userFactory, bookFactory, $routePar
 
 	$scope.currentUser = {name: ''};
 	$scope.user_isbns = [];
+	var bsdate = {date: ''};
+	var list = {};
 	userFactory.current(function(user){
 		if(user.name){
 			$scope.currentUser = user;
@@ -403,7 +449,10 @@ Book.controller("searchController", function(userFactory, bookFactory, $routePar
 				if ($scope.currentUser.name) {
 					results: for (var i=0;i<results.results.length;i++) {
 						isbns: for (var j=$scope.user_isbns.length-1;j>=0;j--){
-							console.log("here");
+							if (i === 0) {
+								bsdate.date = results.results[0].bestsellers_date;
+								list.name = results.results[0].display_name;
+							};
 							if (results.results[i].book_details[0].primary_isbn13 == $scope.user_isbns[j].book_isbn){
 								results.results[i].shelf = "on";
 								$scope.search_results.push(results.results[i]);
@@ -412,7 +461,6 @@ Book.controller("searchController", function(userFactory, bookFactory, $routePar
 								continue results;
 							}
 							else if (j === 0 && results.results[i].shelf !== "on") {
-								console.log("here");
 								results.results[i].shelf = "off";
 								$scope.desc.push({is: "hide"});
 								$scope.search_results.push(results.results[i]);
@@ -420,22 +468,20 @@ Book.controller("searchController", function(userFactory, bookFactory, $routePar
 						};
 					};
 				} else {
-					for (var i = results.results.length - 1; i >= 0; i--) {
+					for (var i=0;i<results.results.length;i++){
+							if (i === 0) {
+								bsdate.date = results.results[0].bestsellers_date;
+								list.name = results.results[0].display_name;
+							};
 							results.results[i].shelf = "none";
 							$scope.search_results.push(results.results[i]);
-							$scope.desc.push({is: "hide"});
 					};
 				};
-				var len = $scope.search_results.length;
-				for (var i=$scope.search_results.length-1;i>=0;i--){
-					$scope.search_results.push($scope.search_results[i]);
-				};
-				$scope.search_results.splice(0,len);
 				console.log($scope.search_results);
-				var dat = new Date($scope.search_results[0].bestsellers_date);
-				dat = dat.toString().substr(4,11);
-				console.log(dat);
-				$scope.result_query = {by: "Best Sellers List", list: $scope.search_results[0].list_name, date: dat};
+				bsdate = new Date(bsdate.date);			
+				bsdate = formalDate(bsdate);
+				console.log(bsdate);
+				$scope.result_query = {by: "Best Sellers List", list: list.name, date: bsdate};
 				if($scope.search_results.length < 1){
 					$scope.no_results = {};
 					$scope.no_results.by = search.by;
