@@ -48,9 +48,12 @@ module.exports = {
 
 	saveNotes: function(req,res){
 		console.log(req.body);
-		Books.findOne({_user: req.body._id}).where("book_isbn").equals(req.body.book).exec(function(err,book){
-			book.notes = req.body.notes;
-			book.save;
+		Books.findOne({_user: req.body.id}).where("book_isbn").equals(req.body.book).exec(function(err,book){
+			console.log(book);
+			book.notes.page = req.body.page;
+			book.notes.summary = req.body.summary;
+			book.save();
+			console.log(book);
 			res.json(book);
 		});
 	}

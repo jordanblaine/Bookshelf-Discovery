@@ -46,26 +46,30 @@
 			#title a:hover{
 				color: rgb(204, 151, 102);
 			}
-			.logsig a{
+			.login-links a{
 				display: inline-block;
-				padding: 0 1rem;
 			}
-			.logsig a :hover{
+			.logsig a{
+				margin: 1rem;
+				font-size: 130%;
+			}
+			#logout:hover{
 				color: black;
+				text-decoration: underline;
 			}
 			.logsig{
 				text-align: center;
 				padding-top: 1em;
 			}
 			.link a{
-				display: block;
+				width: 100%;
 				text-align: center;
 				color: rgb(153,38,0);
 			}
 			.link a:hover{
 				text-decoration: underline;
 			}
-			footer{
+			/*footer{
 				margin: 0 auto;
 				width: 80vw;
 				left: 18vw;
@@ -77,10 +81,13 @@
 				z-index: 10;
 				height: 3rem;
 				margin-top: -3rem;
-			}
+			}*/
 			.left-side h4{
 				font-size: 2.5vh;
 				text-decoration: bold;
+			}
+			.spacer{
+				height: 5rem;
 			}
 		</style>
 	</head>
@@ -91,25 +98,31 @@
 		<div class="row" style='height:3rem'></div>
 		<div class="pipes">
 			<div class="left-side" style='background-color: rgb(187,187,119)'>
-				<div ng-if='!currentUser' class='row logsig' style='width: 100%; height: 5em; padding: auto 0'>
+				<div ng-if='!currentUser' class='row logsig login-links' style='width: 100%; height: 5em; padding: auto 0'>
 					<a href="#/login" style='color: rgb(102,102,102)'>
-						<h4><u>Login</u></h4>
+						<h4>Login</h4>
 					</a>
 					<a href="#/signup" style='color: rgb(102,102,102)'>
-						<h4><u>Signup</u></h4>
+						<h4>Signup</h4>
 					</a>
 				</div>
 				<div ng-if='currentUser' class='row logsig medium-10 large-10' style='width: 100%; height: 5em; padding: auto 0'>
 					<h4>Logged in as:</h4>
 					<h4 ng-bind='currentUser.name'></h4>
 					<br>										
-					<h4><a ng-click='logout()' style='color: rgb(102,102,102)'>Logout</a></h4>
+					<a id='logout' ng-click='logout()' style='color: rgb(102,102,102)'>Logout</a>
 					<hr>
 					<br>
 					<div class="link">
-						<h5><a href="#/profile">Your Profile</a></h5>
-						<br>
-						<h5><a href="#/bookshelf">Your Bookshelf</a></h5>
+						<ul style='list-style: none'>
+							<li>
+								<a href="#/profile">Your Profile</a>
+							</li>
+							<br>
+							<li>
+								<a href="#/bookshelf">Your Bookshelf</a>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -119,6 +132,7 @@
 						<div ng-view=''></div>
 					</div>
 				</div>
+				<div class='spacer'></div>
 				<!-- <footer>
 					<h6>All rights reserved.</h6>
 				</footer> -->

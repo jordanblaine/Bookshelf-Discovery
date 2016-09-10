@@ -1,6 +1,6 @@
 <style type="text/css">
 	.pan{
-		height: 400px;
+		height: 550px;
 		text-align: center;
 		border: groove 0.2em rgb(210,164,121);
 		border-radius: 0.5em;
@@ -27,11 +27,13 @@
 		color: rgb(77,77,77);
 	}
 	.border{
-		border: 0.25rem rgb(153,102,51) solid;
+		border: 0.25rem rgb(204, 153, 102) groove;
 		margin: 0.25rem rgb(204,153,102) solid;
-		width: 0.5rem;
-		height: 10rem;
 		display: inline-block;
+		padding: 2rem;
+	}
+	#skip{
+		padding: 1rem;
 	}
 </style>
 <br><br><br>
@@ -52,28 +54,29 @@
 				<p>Explore the many books that the New York Best Seller's List has to offer.</p>
 				<a class='button success' href='#/search'>Go to Book Search &rarr;</a>
 				<br>
-				<p>Or skip straight to the past week's best sellers list here.</p>
+				<h5 id='skip'>Or skip straight to the past week's best sellers list here.</h5>
 			</div>
 			<div class="row">
-				<ul id='left-list'>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=combined-print-and-e-book-fiction">Combined Print & E-Book Fiction</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=hardcover-nonfiction">Hardcover Nonfiction</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=paperback-nonfiction">Paperback Nonfiction</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=education">Education</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=science">Science</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=business">Business</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=religion-spirituality-and-faith">Religion, Spirituality and Faith</a></li>
-				</ul>
-				<div class="border"></div>
-				<ul id='right-list'>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=combined-print-and-e-book-nonfiction">Combined Print & E-Book Nonfiction</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=hardcover-fiction">Hardcover Fiction</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=culture">Culture</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=politics">Politics</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=series">Children's Series</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=health">Health</a></li>
-					<li><a ng-href="#/search?i=y&date={{date}}&list=travel">Travel</a></li>
-				</ul>
+				<div class="border">
+					<ul id='left-list'>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=combined-print-and-e-book-fiction">Combined Print & E-Book Fiction</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=hardcover-nonfiction">Hardcover Nonfiction</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=paperback-nonfiction">Paperback Nonfiction</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=education">Education</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=science">Science</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=business">Business</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=religion-spirituality-and-faith">Religion, Spirituality and Faith</a></li>
+					</ul>
+					<ul id='right-list'>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=combined-print-and-e-book-nonfiction">Combined Print & E-Book Nonfiction</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=hardcover-fiction">Hardcover Fiction</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=culture">Culture</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=politics">Politics</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=series">Children's Series</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=health">Health</a></li>
+						<li><a ng-href="#/search?i=y&date={{date}}&list=travel">Travel</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>

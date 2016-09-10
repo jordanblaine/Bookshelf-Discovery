@@ -69,7 +69,7 @@
 						<a ng-if='book.results[0].reviews[0].sunday_review_link.length > 0' ng-href="{{book.results[0].reviews[0].sunday_review_link}}" style='text-decoration: underline' target='_blank'>See Review</a>
 					</td>
 					<td style='width: 15%'>
-						<a ng-click="openNotes($index)" style='text-decoration: underline'>Update Notes</a>
+						<a ng-click="openNotes($index,book.results[0].isbns)" style='text-decoration: underline'>Update Notes</a>
 					</td>
 					<td style='width: 10%'>
 						<button ng-click='areYouSure($index)' class='button alert small' style='margin: auto 0'>Remove Book</button>
@@ -86,21 +86,29 @@
 						<table id='dtable'>
 							<tr>
 								<th colspan='6'>
-									<p id='no_notes'>There are currently no notes for this book. Fill in below to save your first notes for this book.</p>
+									<div ng-if='!notes.book'>
+										<p id='no_notes'>There are currently no notes for this book. Fill in below to save your first notes for this book.</p>
+									</div>
+									<div ng-if='notes.book'>
+										<p>Page Number: <span ng-bind='notes.page'></span></p>
+										<p>Summary: <span ng-bind='notes.summary'></span></p>
+									</div>
 								</th>
 							</tr>
 							<tr>
-								<td colspan='1'>
-									<label>Current Page #:
-										<input type='number' min='1' max='2000' ng-bind='' ng-model='notes.page'>
-									</label>
-								</td>
-								<td colspan='4'>
-									<label>Summary of Book:
-										<textarea ng-model='notes.summary' value='book.notes.summary'></textarea>
-									</label>
-								</td>
-								<td clospan='1'><button class='button success' ng-clcik='saveNotes($index)'>Save Notes</button><button class='button primary' ng-click='closeNotes()'>Close Notes</button></td>
+								<form>
+									<td colspan='1'>
+										<label>Current Page #:
+											<input type='number' min='1' max='2000' ng-model='new_notes.page'>
+										</label>
+									</td>
+									<td colspan='4'>
+										<label>Summary of Book:
+											<textarea ng-model='new_notes.summary'></textarea>
+										</label>
+									</td>
+									<td clospan='1'><button class='button success' ng-click='saveNotes(new_notes,note_isbn)'>Save Notes</button><button class='button primary' ng-click='closeNotes()'>Close Notes</button></td>
+								</form>
 							</tr>
 						</table>
 					</td>

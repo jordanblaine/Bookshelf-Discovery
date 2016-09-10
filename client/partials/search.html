@@ -193,7 +193,7 @@
 						<td><a ng-if='each.reviews[0].sunday_review_link.length > 0' ng-href='{{each.reviews[0].sunday_review_link}}' style='text-decoration: underline' target='_blank'>See Review</a></td>
 						<td>
 							<button ng-if="each.shelf === 'off'" class='button primary' ng-click='addBook(each.isbns[0].isbn13,$index)' style='width: 95%;font-size:83%;margin-top:1em' title='Add to your Bookshelf'>Add to Bookshelf</button>
-							<button ng-if="each.shelf === 'on'" class='button success addButton' ng-click='removeBook(each.isbns[0].isbn13,$index)' style='width: 95%;margin-top:1em' title='Already on your Bookshelf'>&#10004;</button><button ng-if="each.shelf === 'none'" class='button primary disabled addButton' style='width: 95%;margin-top:1em' title='Sign in to add a book to your Bookshelf'>Add to Bookshelf</button>
+							<button ng-if="each.shelf === 'on'" class='button success addButton' ng-click='removeBook(each.isbns[0].isbn13,$index)' style='width: 95%;margin-top:1em' title='Already on your Bookshelf'>&#10004;</button>
 							<button ng-if="each.shelf === 'none'" class='button primary disabled addButton' style='width: 95%;margin-top:1em;font-size:83%' title='Sign in to add a book to your Bookshelf'>Add to Bookshelf</button>
 						</td>
 					</tr>

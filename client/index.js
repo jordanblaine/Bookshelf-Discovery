@@ -144,8 +144,7 @@ Book.factory("bookFactory", function($http){
 		})
 	}
 
-	factory.saveNotes = function(notes){
-		console.log(notes);
+	factory.saveNotes = function(notes,callback){
 		$http.post("/books/bookshelf/saveNotes",notes).success(function(data){
 			callback(data);
 		}).error(function(){
@@ -356,6 +355,7 @@ Book.controller("shelfController", function(userFactory, bookFactory, $routePara
 	$scope.books = [];
 	$scope.are_you_sure = {};
 	$scope.book_notes = {};
+	$scope.notes = {};
 	userFactory.current(function(user){
 		if(user.name){
 			$scope.currentUser = user;
@@ -365,19 +365,17 @@ Book.controller("shelfController", function(userFactory, bookFactory, $routePara
 				console.log($scope.user_isbns);
 				getBookshelf($scope.user_isbns);
 			});
-			
 		}
 	});
 
 	getBookshelf = function(shelf){
-		for (var i = shelf.length - 1; i >= 0; i--) {
+		for (var i=0;i<shelf.length;i++) {
 			bookFactory.getByIsbn(shelf[i].book_isbn,function(book){
 				if (book) {
 					$scope.books.push(book);
 				};
 				console.log($scope.books);
-			});
-			
+			});	
 		};
 	};
 
@@ -399,20 +397,48 @@ Book.controller("shelfController", function(userFactory, bookFactory, $routePara
 		$scope.are_you_sure.is = null;
 	}
 
-	$scope.openNotes = function(index){
-		console.log("dkfnv");
+	$scope.openNotes = function(index,isbn){
+		$scope.notes = {};
 		$scope.book_notes.is = index;
+		getNotes(isbn);
 	}
 
 	$scope.closeNotes = function(){
-		console.log("nbkdflnlkdnlv");
 		$scope.book_notes.is = null;
 	}
 
-	$scope.saveNotes = function(){
-		bookFactory.saveNotes({_id: $scope.currentUser._id, notes: $scope.notes},function(saved){
-			console.log(saved);
+	$scope.saveNotes = function(notes,book){
+		console.log(notes,book);
+		bookFactory.saveNotes({id: $scope.currentUser._id, book: book, page: notes.page, summary: notes.summary},function(saved_notes){
+			if (saved_notes) {$scope.new_notes = {page: null, summary: null}};
+			$scope.notes.book = saved_notes.book_isbn;
+			$scope.notes.page = saved_notes.notes.page;
+			$scope.notes.summary = saved_notes.notes.summary;
+			$scope.new_notes = {};
 		});
+	}
+
+	getNotes = function(isbn){
+		console.log($scope.user_isbns);
+		bookshelf:
+		for (var i = 0; i < $scope.user_isbns.length; i++) {
+		isbns:
+			console.log("a");
+			for (var j = 0; j < isbn.length; j++) {
+				if ($scope.user_isbns[i].book_isbn == isbn[j].isbn13){
+					console.log("e");
+					if ($scope.user_isbns[i].notes) {
+						console.log("i");
+						$scope.notes.book = isbn[j].isbn13;
+						$scope.notes.page = $scope.user_isbns[i].notes.page;
+						$scope.notes.summary = $scope.user_isbns[i].notes.summary;
+					};
+					console.log("o");
+					$scope.note_isbn = $scope.user_isbns[i].book_isbn;
+					break bookshelf;
+				}
+			};
+		};
 	}
 		
 
